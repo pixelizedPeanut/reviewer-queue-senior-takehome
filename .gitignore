@@ -1,11 +1,47 @@
-backend/.venv/
-backend/__pycache__/
-backend/app/__pycache__/
-backend/tests/__pycache__/
-.pytest_cache/
+# ==============================================================================
+# GLOBAL MATCHERS (Applies to all root files, subfolders, and submodules)
+# ==============================================================================
 
-frontend/node_modules/
-frontend/dist/
-frontend/.vite/
-
+# OS-Specific system file noise
 .DS_Store
+Thumbs.db
+
+# ==============================================================================
+# BACKEND / PYTHON ARTIFACTS
+# ==============================================================================
+
+# Targets any virtual environment folder named .venv anywhere in the repository
+**/.venv/
+**/venv/
+ENV/
+env/
+
+# Targets any Python bytecode cache directories globally
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Testing state artifacts
+**/.pytest_cache/
+.coverage
+htmlcov/
+
+# ==============================================================================
+# FRONTEND / NODE ARTIFACTS
+# ==============================================================================
+
+# Targets all dependency installations across any frontend/submodule workspaces
+**/node_modules/
+
+# Targets all production build distributions and cache bundles globally
+**/dist/
+**/.vite/
+**/.nuxt/
+**/.next/
+
+# Log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

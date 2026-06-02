@@ -1,6 +1,7 @@
 import asyncio
 
-from app.main import health, list_review_items
+from app.main import health
+from app.routers.review_items import list_review_items
 
 
 def run_async(coro):

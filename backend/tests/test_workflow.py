@@ -1,12 +1,17 @@
+import app.services as svc
 import pytest
-from app.main import ITEMS, app
+from app.main import app
 from fastapi.testclient import TestClient
 
 client = TestClient(app)
 
 
-def test_terminal_state_enforcement():
-    """Ensure that an item not in 'in_review' cannot be approved or rejected."""
+def test_terminal_state_enforcement() -> None:
+    """
+    Validates backend state machine boundaries via mock HTTP clients.
+    Ensures that items must step through 'unassigned' -> 'in_review' -> 'terminal'
+    sequentially, throwing 400 Bad Requests on illegal shortcuts.
+    """
     # 1. Setup a clean mock item in our global state that is unassigned
     test_item = {
         "id": "test-lock-99",
@@ -16,7 +21,8 @@ def test_terminal_state_enforcement():
         "customer_tier": "standard",
         "submitted_at": "2026-06-01T12:00:00Z",
     }
-    ITEMS.append(test_item)
+    # Append to the list inside services where it now resides
+    svc.ITEMS.append(test_item)
 
     # 2. Try to directly approve it without claiming it first (Should fail with 400)
     response = client.post(
